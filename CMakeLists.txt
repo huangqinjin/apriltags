@@ -13,6 +13,9 @@ find_package(Eigen3 REQUIRED)
 file(GLOB SOURCE_FILES "src/*.cc")
 add_library(${PROJECT_NAME} ${SOURCE_FILES})
 
+# https://stackoverflow.com/questions/225432/export-all-symbols-when-creating-a-dll
+set_property(TARGET ${PROJECT_NAME} PROPERTY WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 # https://cmake.org/cmake/help/latest/prop_tgt/INTERFACE_INCLUDE_DIRECTORIES.html
 # https://stackoverflow.com/questions/25676277/cmake-target-include-directories-prints-an-error-when-i-try-to-add-the-source
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}> PRIVATE AprilTags)

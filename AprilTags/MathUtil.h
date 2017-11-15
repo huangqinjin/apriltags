@@ -9,6 +9,11 @@
 #include <ostream>
 #include <utility>
 
+// Math Constants are not defined in Standard C/C++
+#ifndef M_PI
+#define M_PI 3.14159265358979323846 
+#endif
+
 namespace AprilTags {
 
 std::ostream& operator<<(std::ostream &os, const std::pair<float,float> &pt);
