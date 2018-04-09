@@ -7,7 +7,7 @@ if (NOT CMAKE_BUILD_TYPE)
         FORCE)
  endif()
 
-find_package(OpenCV REQUIRED calib3d imgproc)
+find_package(OpenCV REQUIRED COMPONENTS calib3d imgproc)
 find_package(Eigen3 REQUIRED)
 
 file(GLOB SOURCE_FILES "src/*.cc")
@@ -46,6 +46,14 @@ include(CMakePackageConfigHelpers)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake.in"
 "@PACKAGE_INIT@
 include(\"\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}-targets.cmake\")
+if(NOT TARGET opencv_calib3d OR NOT TARGET opencv_imgproc)
+    include(CMakeFindDependencyMacro)
+    find_dependency(OpenCV)
+endif()
+if(NOT TARGET Eigen3::Eigen)
+    include(CMakeFindDependencyMacro)
+    find_dependency(Eigen3)
+endif()
 ")
 
 configure_package_config_file("${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake.in"
