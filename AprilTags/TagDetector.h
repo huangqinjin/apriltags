@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "opencv2/opencv.hpp"
+#include <opencv2/core/mat.hpp>
 
 #include "AprilTags/TagDetection.h"
 #include "AprilTags/TagFamily.h"

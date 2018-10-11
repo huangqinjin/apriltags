@@ -27,8 +27,9 @@
 //#define DEBUG_APRIL
 
 #ifdef DEBUG_APRIL
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
 #endif
 
 using namespace std;
