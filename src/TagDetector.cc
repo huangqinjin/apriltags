@@ -38,15 +38,18 @@ namespace AprilTags {
 
   std::vector<TagDetection> TagDetector::extractTags(const cv::Mat& image) {
 
-    // convert to internal AprilTags image (todo: slow, change internally to OpenCV)
+    // convert to internal AprilTags image
     int width = image.cols;
     int height = image.rows;
     AprilTags::FloatImage fimOrig(width, height);
-    int i = 0;
-    for (int y=0; y<height; y++) {
-      for (int x=0; x<width; x++) {
-        fimOrig.set(x, y, image.data[i]/255.);
-        i++;
+    {
+      assert(image.type() == CV_8UC1 || image.type() == CV_32FC1);
+      cv::Mat mat(height, width, CV_32FC1,
+                  const_cast<float*>(&fimOrig.getFloatImagePixels()[0]));
+      if(image.type() == CV_8UC1) {
+        image.convertTo(mat, CV_32FC1, 1/255.);
+      } else {
+        image.copyTo(mat);
       }
     }
     std::pair<int,int> opticalCenter(width/2, height/2);

@@ -7,7 +7,7 @@ if (NOT CMAKE_BUILD_TYPE)
         FORCE)
  endif()
 
-find_package(OpenCV REQUIRED COMPONENTS calib3d imgproc)
+find_package(OpenCV REQUIRED COMPONENTS core calib3d imgproc)
 find_package(Eigen3 REQUIRED)
 
 file(GLOB SOURCE_FILES "src/*.cc")
@@ -19,7 +19,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # https://cmake.org/cmake/help/latest/prop_tgt/INTERFACE_INCLUDE_DIRECTORIES.html
 # https://stackoverflow.com/questions/25676277/cmake-target-include-directories-prints-an-error-when-i-try-to-add-the-source
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}> PRIVATE AprilTags)
-target_link_libraries(${PROJECT_NAME} PUBLIC opencv_calib3d opencv_imgproc Eigen3::Eigen)
+target_link_libraries(${PROJECT_NAME} PUBLIC Eigen3::Eigen opencv_core PRIVATE opencv_calib3d opencv_imgproc)
 
 
 include(GNUInstallDirs)
@@ -46,7 +46,7 @@ include(CMakePackageConfigHelpers)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake.in"
 "@PACKAGE_INIT@
 include(\"\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}-targets.cmake\")
-if(NOT TARGET opencv_calib3d OR NOT TARGET opencv_imgproc)
+if(NOT TARGET opencv_core NOT TARGET opencv_calib3d OR NOT TARGET opencv_imgproc)
     include(CMakeFindDependencyMacro)
     find_dependency(OpenCV)
 endif()
