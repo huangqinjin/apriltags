@@ -46,7 +46,7 @@ include(CMakePackageConfigHelpers)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake.in"
 "@PACKAGE_INIT@
 include(\"\${CMAKE_CURRENT_LIST_DIR}/${PROJECT_NAME}-targets.cmake\")
-if(NOT TARGET opencv_core NOT TARGET opencv_calib3d OR NOT TARGET opencv_imgproc)
+if(NOT TARGET opencv_core OR NOT TARGET opencv_calib3d OR NOT TARGET opencv_imgproc)
     include(CMakeFindDependencyMacro)
     find_dependency(OpenCV ${OPENCV_VERSION})
 endif()
