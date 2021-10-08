@@ -20,6 +20,9 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # https://stackoverflow.com/questions/25676277/cmake-target-include-directories-prints-an-error-when-i-try-to-add-the-source
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}> PRIVATE AprilTags)
 target_link_libraries(${PROJECT_NAME} PUBLIC Eigen3::Eigen opencv_core PRIVATE opencv_calib3d opencv_imgproc)
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /wd4244) 
+endif()
 
 
 include(GNUInstallDirs)
